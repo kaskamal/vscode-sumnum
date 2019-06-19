@@ -14,26 +14,15 @@ export function activate({subscriptions}: ExtensionContext) {
 
 
 	subscriptions.push(commands.registerCommand(commandId, () => {
-		let n = wordCounter.updateWordCount();
-		window.showInformationMessage(`Yeah, ${n} number(s) selected`);
+		let n = wordCounter.wordCount;
+		window.showInformationMessage(`${n} number(s) selected`);
 	}));
-
-	// // The command has been defined in the package.json file
-	// // Now provide the implementation of the command with registerCommand
-	// // The commandId parameter must match the command field in package.json
-	// let disposable = commands.registerCommand('extension.helloWorld', () => {
-	// 	// The code you place here will be executed every time your command is executed
-
-	// 	// Display a message box to the user
-	// 	window.showInformationMessage('Hello World!');
-	// });
-
 }
 
 
 class WordCounter {
 	private statusBar: StatusBarItem;
-
+	private _wordCount: number = 0;
 
 	constructor(commandId: string) {
 		this.statusBar = window.createStatusBarItem(StatusBarAlignment.Left);
@@ -54,15 +43,19 @@ class WordCounter {
 		let selection = editor.selection;
 		let text = editor.document.getText(selection);
 
-		let wordCount = this.extractWordCount(text);
+		this.extractWordCount(text);
 
-		this.statusBar.text = `Sum: ${wordCount}`;
+		this.statusBar.text = `Sum: ${this._wordCount}`;
         this.statusBar.show();
 
 	}
 
 	public extractWordCount(text: string) {
-		return 100;
+		this._wordCount = 100;
+	}
+
+	get wordCount(): number {
+		return this._wordCount;
 	}
 
 	public dispose() {
