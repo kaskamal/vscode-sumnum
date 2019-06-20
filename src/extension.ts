@@ -15,7 +15,7 @@ export function activate({subscriptions}: ExtensionContext) {
 
 	subscriptions.push(commands.registerCommand(commandId, () => {
 		let n = wordCounter.wordCount;
-		window.showInformationMessage(`${n} number(s) selected`);
+		window.showInformationMessage(`Total count: ${n}`);
 	}));
 }
 
