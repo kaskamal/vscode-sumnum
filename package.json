@@ -13,6 +13,14 @@
 		"*"
 	],
 	"main": "./out/extension.js",
+	"contributes": {
+		"commands": [
+			{
+				"command": "extension.sumTotal",
+				"title": "Sum Total"
+			}
+		]
+	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
 		"compile": "tsc -p ./",

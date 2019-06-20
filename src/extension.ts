@@ -1,5 +1,10 @@
 import {StatusBarItem, StatusBarAlignment, window, commands, ExtensionContext, Disposable} from 'vscode';
 
+
+// regex string that extracts list of all numbers present in a string
+const NUMERIC_NUMBERS = "/[+-]?\d+(?:\.\d+)?/g";
+
+
 export function activate({subscriptions}: ExtensionContext) {
 
 	// Print to console successfull activation of extension
@@ -17,6 +22,14 @@ export function activate({subscriptions}: ExtensionContext) {
 		let n = wordCounter.wordCount;
 		window.showInformationMessage(`Total count: ${n}`);
 	}));
+
+	
+	subscriptions.push(commands.registerCommand("extension.sumTotal", () => {
+		let n = wordCounter.wordCount;
+		window.showInformationMessage(`Total count: ${n}`);
+	}));
+	
+	
 }
 
 
@@ -51,7 +64,32 @@ class WordCounter {
 	}
 
 	public extractWordCount(text: string) {
-		this._wordCount = 100;
+		const lines = text.trim().split("\n");
+
+
+		const numList = lines.map((line) => {
+			const allNumsS = line.match(NUMERIC_NUMBERS);
+			console.log(line);
+
+			if (allNumsS && allNumsS.length > 0) {	
+				// Parse all numbers to float
+				const allNumsN = allNumsS.map((numS) => {
+					return +(numS);
+				});
+				
+				// Return the sum of all numbers in a line
+				return allNumsN.reduce((prev, curr) => {
+					return prev + curr;
+				});
+			} else {
+				return 0;
+			}
+		});
+
+
+		return numList.reduce((prev, curr) => {
+			return prev + curr;
+		});
 	}
 
 	get wordCount(): number {
