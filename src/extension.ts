@@ -2,7 +2,7 @@ import {StatusBarItem, StatusBarAlignment, window, commands, ExtensionContext, D
 
 
 // regex string that extracts list of all numbers present in a string
-const NUMERIC_NUMBERS = "/[+-]?\d+(?:\.\d+)?/g";
+const NUMERIC_NUMBERS = /[+-]?\d+(?:\.\d+)?/g;
 
 
 export function activate({subscriptions}: ExtensionContext) {
@@ -69,9 +69,8 @@ class WordCounter {
 
 		const numList = lines.map((line) => {
 			const allNumsS = line.match(NUMERIC_NUMBERS);
-			console.log(line);
-
 			if (allNumsS && allNumsS.length > 0) {	
+				console.log("GOT HERE");
 				// Parse all numbers to float
 				const allNumsN = allNumsS.map((numS) => {
 					return +(numS);
