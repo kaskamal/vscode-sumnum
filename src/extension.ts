@@ -1,4 +1,4 @@
-import {StatusBarItem, StatusBarAlignment, window, commands, ExtensionContext, Disposable} from 'vscode';
+import {StatusBarItem, StatusBarAlignment, window, commands, ExtensionContext, Disposable, env} from 'vscode';
 
 
 // regex string that extracts list of all numbers present in a string
@@ -11,6 +11,7 @@ export function activate({subscriptions}: ExtensionContext) {
 	console.log('Congratulations, your extension "sumnum" is now active!');
 
 	const commandId = "sample.showSelectionCount";
+	const palatteCommands = ["sumTotal", "sumAvg", "sumMax", "sumMin"];
 
 	let wordCounter = new WordCounter(commandId);
 	let wordCounterController = new WordCounterController(wordCounter);
@@ -19,15 +20,20 @@ export function activate({subscriptions}: ExtensionContext) {
 
 
 	subscriptions.push(commands.registerCommand(commandId, () => {
-		let n = wordCounter.wordCount;
+		let n = wordCounter.getCount;
 		window.showInformationMessage(`Total count: ${n}`);
 	}));
 
+
+	palatteCommands.forEach((element) => {
+		let command = "extension.".concat(element);
+		subscriptions.push(commands.registerCommand(command, () => {
+			let n = wordCounter.getCount(element);
+			window.showInformationMessage(`Total count: ${n}`);
+		}));
+	});
 	
-	subscriptions.push(commands.registerCommand("extension.sumTotal", () => {
-		let n = wordCounter.wordCount;
-		window.showInformationMessage(`Total count: ${n}`);
-	}));
+	
 	
 	
 }
@@ -35,7 +41,12 @@ export function activate({subscriptions}: ExtensionContext) {
 
 class WordCounter {
 	private statusBar: StatusBarItem;
-	private _wordCount: number = 0;
+	private _wordCount: {[key: string]: number} = {
+		sumTotal: 0,
+		sumAvg:   0,
+		sumMax:   0,
+		sumMin:   0
+	};
 
 	constructor(commandId: string) {
 		this.statusBar = window.createStatusBarItem(StatusBarAlignment.Left);
@@ -75,7 +86,6 @@ class WordCounter {
 					return +(numS);
 				});
 
-				
 				// Return the sum of all numbers in a line
 				return allNumsN.reduce((prev, curr) => {
 					return prev + curr;
@@ -85,13 +95,18 @@ class WordCounter {
 			}
 		});
 
-		this._wordCount =  numList.reduce((prev, curr) => {
+
+
+		this._wordCount.sumTotal =  numList.reduce((prev, curr) => {
 			return prev + curr;
 		});
+		this._wordCount.sumMax = Math.max(... numList);
+		this._wordCount.sumMin = Math.min(... numList);
+		this._wordCount.sumAvg = this._wordCount.sumTotal / numList.length;
 	}
 
-	get wordCount(): number {
-		return this._wordCount;
+	public getCount(type: string): number {
+		return this._wordCount[type];
 	}
 
 	public dispose() {
@@ -115,7 +130,7 @@ class WordCounterController {
         window.onDidChangeActiveTextEditor(this._onEvent, this, subscriptions);
 
         // update the counter for the current file
-        this._wordCounter.updateWordCount();
+		// this._wordCounter.updateWordCount();
 
         // create a combined disposable from both event subscriptions
         this._disposable = Disposable.from(...subscriptions);
