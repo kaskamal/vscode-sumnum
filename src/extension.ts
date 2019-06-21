@@ -70,11 +70,11 @@ class WordCounter {
 		const numList = lines.map((line) => {
 			const allNumsS = line.match(NUMERIC_NUMBERS);
 			if (allNumsS && allNumsS.length > 0) {	
-				console.log("GOT HERE");
 				// Parse all numbers to float
 				const allNumsN = allNumsS.map((numS) => {
 					return +(numS);
 				});
+
 				
 				// Return the sum of all numbers in a line
 				return allNumsN.reduce((prev, curr) => {
@@ -85,8 +85,7 @@ class WordCounter {
 			}
 		});
 
-
-		return numList.reduce((prev, curr) => {
+		this._wordCount =  numList.reduce((prev, curr) => {
 			return prev + curr;
 		});
 	}
