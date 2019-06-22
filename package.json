@@ -16,19 +16,31 @@
     "contributes": {
         "commands": [{
                 "command": "extension.sumTotal",
-                "title": "Sum Total"
+                "title": "Total",
+                "category": "SUM"
             },
             {
                 "command": "extension.sumAvg",
-                "title": "Sum Avg"
+                "title": "Avg",
+                "category": "SUM"
+
             },
             {
                 "command": "extension.sumMax",
-                "title": "Sum Max"
+                "title": "Max",
+                "category": "SUM"
+
             },
             {
                 "command": "extension.sumMin",
-                "title": "Sum Min"
+                "title": "Min",
+                "category": "SUM"
+
+            },
+            {
+                "command": "extension.sumCol",
+                "title": "Col",
+                "category": "SUM"
             }
         ]
     },
