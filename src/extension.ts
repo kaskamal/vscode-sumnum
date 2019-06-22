@@ -11,7 +11,7 @@ export function activate({subscriptions}: ExtensionContext) {
 	console.log('Congratulations, your extension "sumnum" is now active!');
 
 	const commandId = "sample.showSelectionCount";
-	const palatteCommands = ["sumTotal", "sumAvg", "sumMax", "sumMin"];
+	const palatteCommands = ["sumTotal", "sumAvg", "sumMax", "sumMin", "sumCol"];
 
 	let wordCounter = new WordCounter(commandId);
 	let wordCounterController = new WordCounterController(wordCounter);
@@ -45,7 +45,8 @@ class WordCounter {
 		sumTotal: 0,
 		sumAvg:   0,
 		sumMax:   0,
-		sumMin:   0
+		sumMin:   0,
+		sumCol:   0
 	};
 
 	constructor(commandId: string) {
@@ -77,6 +78,8 @@ class WordCounter {
 	public extractWordCount(text: string) {
 		const lines = text.trim().split("\n");
 
+		this.updateColInfo(lines);
+
 
 		const numList = lines.map((line) => {
 			const allNumsS = line.match(NUMERIC_NUMBERS);
@@ -103,6 +106,20 @@ class WordCounter {
 		this._wordCount.sumMax = Math.max(... numList);
 		this._wordCount.sumMin = Math.min(... numList);
 		this._wordCount.sumAvg = this._wordCount.sumTotal / numList.length;
+	}
+
+	public updateColInfo(lines: string[]) {
+		let colNumList: number[] = [];
+		lines.forEach((line) => {
+			const allNumsS = line.match(NUMERIC_NUMBERS);
+			if (allNumsS) {
+				colNumList.push(+(allNumsS[0]));
+			}
+		})
+
+		this._wordCount.sumCol = colNumList.reduce((prev, curr) => {
+			return prev + curr;
+		})
 	}
 
 	public getCount(type: string): number {
