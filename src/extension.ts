@@ -1,4 +1,5 @@
-import {StatusBarItem, StatusBarAlignment, window, commands, ExtensionContext, Disposable, env} from 'vscode';
+import {StatusBarItem, StatusBarAlignment, window, commands, ExtensionContext, Disposable, env, workspace} from 'vscode';
+import * as path from 'path';
 
 
 // regex string that extracts list of all numbers present in a string
@@ -17,13 +18,6 @@ export function activate({subscriptions}: ExtensionContext) {
 	let wordCounterController = new WordCounterController(wordCounter);
 	subscriptions.push(wordCounter);
 	subscriptions.push(wordCounterController);
-
-
-	subscriptions.push(commands.registerCommand(commandId, () => {
-		let n = wordCounter.getCount;
-		window.showInformationMessage(`Total count: ${n}`);
-	}));
-
 
 	palatteCommands.forEach((element) => {
 		let command = "extension.".concat(element);
