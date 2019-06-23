@@ -1,5 +1,5 @@
 import {StatusBarItem, StatusBarAlignment, window, commands, ExtensionContext, Disposable, env, workspace} from 'vscode';
-import * as path from 'path';
+import * as results_viewer from "./results_viewer";
 
 
 // regex string that extracts list of all numbers present in a string
@@ -24,6 +24,7 @@ export function activate({subscriptions}: ExtensionContext) {
 		subscriptions.push(commands.registerCommand(command, () => {
 			let n = wordCounter.getCount(element);
 			window.showInformationMessage(`Total count: ${n}`);
+			results_viewer.openResultsFile();
 		}));
 	});
 	
