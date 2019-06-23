@@ -89,7 +89,11 @@ export class WordCounter {
 
 	public getCount(type: string): number {
 		return this._wordCount[type];
-	}
+    }
+    
+    get wordCount() {
+        return this._wordCount;
+    }
 
 	public dispose() {
 		this.statusBar.dispose();

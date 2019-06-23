@@ -28,4 +28,8 @@ export class WordCounterController {
     private _onEvent() {
         this._wordCounter.updateWordCount();
     }
+
+    get wordCounter() {
+        return this._wordCounter;
+    }
 }

@@ -1,4 +1,4 @@
-import {StatusBarItem, StatusBarAlignment, window, commands, ExtensionContext, Disposable, env, workspace} from 'vscode';
+import {window, commands, ExtensionContext} from 'vscode';
 import * as results_viewer from "./resultsViewer";
 import {WordCounterController} from "./counter/wordCounterController";
 import {WordCounter} from "./counter/wordCounter";
@@ -6,7 +6,7 @@ import {WordCounter} from "./counter/wordCounter";
 export function activate({subscriptions}: ExtensionContext) {
 
 	// Print to console successfull activation of extension
-	console.log('Congratulations, your extension "sumnum" is now active!');
+	console.log('sumnum extension has been successfully added');
 
 	const commandId = "sample.showSelectionCount";
 	const palatteCommands = ["sumTotal", "sumAvg", "sumMax", "sumMin", "sumCol"];
@@ -21,7 +21,7 @@ export function activate({subscriptions}: ExtensionContext) {
 		subscriptions.push(commands.registerCommand(command, () => {
 			let n = wordCounter.getCount(element);
 			window.showInformationMessage(`Total count: ${n}`);
-			results_viewer.openResultsFile();
+			results_viewer.openResultsFile(wordCounterController);
 		}));
 	});
 }
