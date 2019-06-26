@@ -6,7 +6,8 @@ const NUMERIC_NUMBERS = /[+-]?\d+(?:\.\d+)?/g;
 
 export class WordCounter {
 	private statusBar: StatusBarItem;
-	private _wordCount: {[key: string]: number} = {
+	private _tabdelim: string;
+	private _wordCount: {[key: string]: any} = {
 		sumTotal: 0,
 		sumAvg:   0,
 		sumMax:   0,
@@ -17,12 +18,15 @@ export class WordCounter {
 	constructor(commandId: string) {
 		this.statusBar = window.createStatusBarItem(StatusBarAlignment.Left);
 		this.statusBar.command = commandId;
+		this._tabdelim = "csv";
 	}
 
 	public updateWordCount() {
 
 		// Get the current text editor
 		let editor = window.activeTextEditor;
+		console.log(editor)
+
 		// Hide status bar if not using text editor
 		if (!editor) {
 			this.statusBar.hide();
@@ -31,6 +35,7 @@ export class WordCounter {
 
 		// Retrieve text
 		let selection = editor.selection;
+		console.log(selection)
 		let text = editor.document.getText(selection);
 
 		this.extractWordCount(text);
@@ -74,6 +79,7 @@ export class WordCounter {
 	}
 
 	public updateColInfo(lines: string[]) {
+		// If no columns in text file, sum the first number seen in each line
 		let colNumList: number[] = [];
 		lines.forEach((line) => {
 			const allNumsS = line.match(NUMERIC_NUMBERS);

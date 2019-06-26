@@ -1,5 +1,4 @@
 import * as vscode from 'vscode';
-import * as path from 'path';
 import { WordCounterController } from './counter/wordCounterController';
 import { WordCounter } from './counter/wordCounter';
 
@@ -14,8 +13,7 @@ export function openResultsFile(wordCounterController: WordCounterController): v
                 vscode.window.showInformationMessage('Error!');
             }
         });
-    });
-    
+    });   
 }
 
 function editWorkspace(wordCounterController: WordCounterController, file: vscode.Uri): vscode.WorkspaceEdit {
