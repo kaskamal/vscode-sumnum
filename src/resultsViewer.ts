@@ -20,6 +20,13 @@ function editWorkspace(wordCounterController: WordCounterController, file: vscod
     const wordCounter: WordCounter = wordCounterController.wordCounter;
 
     const edit = new vscode.WorkspaceEdit();
-    edit.insert(file, new vscode.Position(0, 0), JSON.stringify(wordCounter.wordCount, null, "\t"));
+
+    // Start and end position of file to replace
+    const startFile = new vscode.Position(0, 0);
+    // Temp solution, need to determine the end line and character of 
+    // the file
+    const endFile   = new vscode.Position(100, 100);
+
+    edit.replace(file, new vscode.Range(startFile, endFile), JSON.stringify(wordCounter.wordCount, null, "\t"));
     return edit;
 } 
