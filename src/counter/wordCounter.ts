@@ -1,4 +1,5 @@
 import {StatusBarItem, StatusBarAlignment, window} from "vscode";
+import { strict } from "assert";
 
 
 // regex string that extracts list of all numbers present in a string
@@ -79,18 +80,36 @@ export class WordCounter {
 	}
 
 	public updateColInfo(lines: string[]) {
-		// If no columns in text file, sum the first number seen in each line
-		let colNumList: number[] = [];
+		// Assuming file types are csv 
+		const numberOfCol = lines[0].split(",").length;
+		let colData: {[key: string]: number} = {}
+
+		for (let i = 0; i < numberOfCol; i++) {
+			colData["Col" + i] = 0;
+		}
+
+
+		// let colNumList: number[] = [];
+		// lines.forEach((line) => {
+		// 	const allNumsS = line.match(NUMERIC_NUMBERS);
+		// 	if (allNumsS) {
+		// 		colNumList.push(+(allNumsS[0]));
+		// 	}
+		// })
+
 		lines.forEach((line) => {
 			const allNumsS = line.match(NUMERIC_NUMBERS);
-			if (allNumsS) {
-				colNumList.push(+(allNumsS[0]));
+			for (let i = 0; i < numberOfCol; i++) {
+				if (allNumsS && allNumsS[i]) {
+					colData["Col" + i] += +(allNumsS[i]);
+				}
 			}
 		})
 
-		this._wordCount.sumCol = colNumList.reduce((prev, curr) => {
-			return prev + curr;
-		})
+		// this._wordCount.sumCol = colNumList.reduce((prev, curr) => {
+		// 	return prev + curr;
+		// })
+		this._wordCount.sumCol = colData;
 	}
 
 	public getCount(type: string): number {
