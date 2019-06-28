@@ -81,18 +81,29 @@ export class WordCounter {
 	public updateColInfo(lines: string[]) {
 		// Assuming file types are csv 
 		const numberOfCol = lines[0].split(",").length;
-		let colData: {[key: string]: number} = {}
+		let colData: {[key: string]: {[key: string]: number}} = {}
 
 		for (let i = 0; i < numberOfCol; i++) {
-			colData["Col" + i] = 0;
+			colData["Col" + i] = {
+				sumTotal: 0,
+				sumAvg: 0,
+				sumMax: 0,
+				sumMin: Infinity
+			};
 		}
 
 		lines.forEach((line) => {
 			const allNumsS = line.match(NUMERIC_NUMBERS);
 			for (let i = 0; i < numberOfCol; i++) {
 				if (allNumsS && allNumsS[i]) {
-					colData["Col" + i] += +(allNumsS[i]);
+					colData["Col" + i].sumTotal += +(allNumsS[i]);
+					colData["Col" + i].sumMax = Math.max(+(allNumsS[i]), colData["Col" + i].sumMax);
+					colData["Col" + i].sumMin = Math.min(+(allNumsS[i]), colData["Col" + i].sumMin);
 				}
+			}
+
+			for (let i = 0; i < numberOfCol; i++) {
+				colData["Col" + i].sumAvg = colData["Col" + i].sumTotal / lines.length;
 			}
 		})
 
