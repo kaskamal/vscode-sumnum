@@ -8,10 +8,15 @@ export function activate({subscriptions}: ExtensionContext) {
 	// Print to console successfull activation of extension
 	console.log('sumnum extension has been successfully added');
 
-	const commandId = "sample.showSelectionCount";
+	const statusBarCommand = "statusBar.showSum";
 	const palatteCommands = ["sumTotal", "sumAvg", "sumMax", "sumMin", "sumCol"];
 
-	let wordCounter = new WordCounter(commandId);
+	subscriptions.push(commands.registerCommand(statusBarCommand, () => {
+		let n = wordCounter.getCount("sumTotal");
+		window.showInformationMessage(`Total count: ${n}`);
+	}))
+
+	let wordCounter = new WordCounter(statusBarCommand);
 	let wordCounterController = new WordCounterController(wordCounter);
 	subscriptions.push(wordCounter);
 	subscriptions.push(wordCounterController);

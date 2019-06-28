@@ -1,5 +1,4 @@
 import {StatusBarItem, StatusBarAlignment, window} from "vscode";
-import { strict } from "assert";
 
 
 // regex string that extracts list of all numbers present in a string
@@ -41,7 +40,7 @@ export class WordCounter {
 
 		this.extractWordCount(text);
 
-		this.statusBar.text = `Sum: ${this._wordCount}`;
+		this.statusBar.text = `Sum: ${this._wordCount.sumTotal}`;
         this.statusBar.show();
 
 	}
@@ -88,15 +87,6 @@ export class WordCounter {
 			colData["Col" + i] = 0;
 		}
 
-
-		// let colNumList: number[] = [];
-		// lines.forEach((line) => {
-		// 	const allNumsS = line.match(NUMERIC_NUMBERS);
-		// 	if (allNumsS) {
-		// 		colNumList.push(+(allNumsS[0]));
-		// 	}
-		// })
-
 		lines.forEach((line) => {
 			const allNumsS = line.match(NUMERIC_NUMBERS);
 			for (let i = 0; i < numberOfCol; i++) {
@@ -106,9 +96,7 @@ export class WordCounter {
 			}
 		})
 
-		// this._wordCount.sumCol = colNumList.reduce((prev, curr) => {
-		// 	return prev + curr;
-		// })
+
 		this._wordCount.sumCol = colData;
 	}
 
