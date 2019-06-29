@@ -30,18 +30,21 @@ export class WordCounter {
 			return;
 		}
 
+		const fileName_split = editor.document.fileName.split(".");
+		const delim = fileName_split[fileName_split.length - 1];
+
 		// Retrieve text
 		let selection = editor.selection;
 		let text = editor.document.getText(selection);
 
-		this.extractWordCount(text);
+		this.extractWordCount(text, delim);
 
 		this.statusBar.text = `Sum: ${this._wordCount.sumTotal}`;
         this.statusBar.show();
 
 	}
 
-	public extractWordCount(text: string) {
+	public extractWordCount(text: string, delim: string) {
 		const lines = text.trim().split("\n");
 
 		this.updateColInfo(lines);
