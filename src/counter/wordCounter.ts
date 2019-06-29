@@ -6,7 +6,6 @@ const NUMERIC_NUMBERS = /[+-]?\d+(?:\.\d+)?/g;
 
 export class WordCounter {
 	private statusBar: StatusBarItem;
-	private _tabdelim: string;
 	private _wordCount: {[key: string]: any} = {
 		sumTotal: 0,
 		sumAvg:   0,
@@ -18,7 +17,6 @@ export class WordCounter {
 	constructor(commandId: string) {
 		this.statusBar = window.createStatusBarItem(StatusBarAlignment.Left);
 		this.statusBar.command = commandId;
-		this._tabdelim = "csv";
 	}
 
 	public updateWordCount() {
