@@ -25,7 +25,6 @@ export class WordCounter {
 
 		// Get the current text editor
 		let editor = window.activeTextEditor;
-		console.log(editor)
 
 		// Hide status bar if not using text editor
 		if (!editor) {
@@ -35,7 +34,6 @@ export class WordCounter {
 
 		// Retrieve text
 		let selection = editor.selection;
-		console.log(selection)
 		let text = editor.document.getText(selection);
 
 		this.extractWordCount(text);
