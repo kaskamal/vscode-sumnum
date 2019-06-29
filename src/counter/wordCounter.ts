@@ -1,4 +1,6 @@
 import {StatusBarItem, StatusBarAlignment, window} from "vscode";
+import {DELIMITER} from "../util";
+
 
 
 // regex string that extracts list of all numbers present in a string
@@ -47,7 +49,7 @@ export class WordCounter {
 	public extractWordCount(text: string, delim: string) {
 		const lines = text.trim().split("\n");
 
-		this.updateColInfo(lines);
+		this.updateColInfo(lines, delim);
 
 
 		const numList = lines.map((line) => {
@@ -77,10 +79,17 @@ export class WordCounter {
 		this._wordCount.sumAvg = this._wordCount.sumTotal / numList.length;
 	}
 
-	public updateColInfo(lines: string[]) {
-		// Assuming file types are csv 
-		const numberOfCol = lines[0].split(",").length;
-		let colData: {[key: string]: {[key: string]: number}} = {}
+	public updateColInfo(lines: string[], delim: string) {
+		let numberOfCol: number;
+		if (DELIMITER[delim]) {
+			numberOfCol = lines[0].split(DELIMITER[delim]).length;
+		} else {
+			numberOfCol = lines[0].split(",").length;
+		}
+
+		console.log(numberOfCol);
+
+		let colData: {[key: string]: {[key: string]: number}} = {};
 
 		for (let i = 0; i < numberOfCol; i++) {
 			colData["Col" + i] = {
