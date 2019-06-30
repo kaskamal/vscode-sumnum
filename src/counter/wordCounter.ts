@@ -39,17 +39,17 @@ export class WordCounter {
 		let selection = editor.selection;
 		let text = editor.document.getText(selection);
 
-		this.extractWordCount(text, delim);
+		this.extractWordCount(text);
 
 		this.statusBar.text = `Sum: ${this._wordCount.sumTotal}`;
         this.statusBar.show();
 
 	}
 
-	public extractWordCount(text: string, delim: string) {
+	public extractWordCount(text: string) {
 		const lines = text.trim().split("\n");
 
-		this.updateColInfo(lines, delim);
+		this.updateColInfo(lines);
 
 
 		const numList = lines.map((line) => {
@@ -79,7 +79,7 @@ export class WordCounter {
 		this._wordCount.sumAvg = this._wordCount.sumTotal / numList.length;
 	}
 
-	private updateColInfo(lines: string[], delim: string) {
+	private updateColInfo(lines: string[]) {
 		const numList = lines[0].match(NUMERIC_NUMBERS)
 		let numberOfCol = 0;
 		if (numList != null) {
