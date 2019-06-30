@@ -79,13 +79,13 @@ export class WordCounter {
 		this._wordCount.sumAvg = this._wordCount.sumTotal / numList.length;
 	}
 
-	public updateColInfo(lines: string[], delim: string) {
-		let numberOfCol: number;
-		if (DELIMITER[delim]) {
-			numberOfCol = lines[0].split(DELIMITER[delim]).length;
-		} else {
-			numberOfCol = lines[0].split(",").length;
+	private updateColInfo(lines: string[], delim: string) {
+		const numList = lines[0].match(NUMERIC_NUMBERS)
+		let numberOfCol = 0;
+		if (numList != null) {
+			numberOfCol = numList.length;
 		}
+		
 
 		console.log(numberOfCol);
 
