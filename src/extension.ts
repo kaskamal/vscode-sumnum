@@ -25,8 +25,13 @@ export function activate({subscriptions}: ExtensionContext) {
 		let command = "extension.".concat(element);
 		subscriptions.push(commands.registerCommand(command, () => {
 			let n = wordCounter.getCount(element);
-			window.showInformationMessage(`Total count: ${n}`);
+			window.showInformationMessage(`${element}: ${n}`);
 			// results_viewer.openResultsFile(wordCounterController);
 		}));
 	});
+
+	// Open results viewer JSON when clicking sumResult from command palatte
+	subscriptions.push(commands.registerCommand("extension.sumResult", () => {
+		results_viewer.openResultsFile(wordCounterController);
+	}))
 }

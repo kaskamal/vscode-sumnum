@@ -47,31 +47,31 @@ export class WordCounter {
 		this.updateColInfo(lines);
 
 
-		const numList = lines.map((line) => {
+		const numList: number[][] = lines.map((line) => {
 			const allNumsS = line.match(NUMERIC_NUMBERS);
 			if (allNumsS && allNumsS.length > 0) {	
 				// Parse all numbers to float
-				const allNumsN = allNumsS.map((numS) => {
+				return allNumsS.map((numS) => {
 					return +(numS);
 				});
-
-				// Return the sum of all numbers in a line
-				return allNumsN.reduce((prev, curr) => {
-					return prev + curr;
-				});
 			} else {
-				return 0;
+				return [];
 			}
 		});
 
+		// flatten multidimensional array into 1d array 
+		// consisting of all the numbers highlighted 
+		let numListFlattenned: number[] = [];
+		numListFlattenned = numListFlattenned.concat(... numList);
 
 
-		this._wordCount.sumTotal =  numList.reduce((prev, curr) => {
+		this._wordCount.sumTotal =  numListFlattenned.reduce((prev, curr) => {
 			return prev + curr;
 		});
-		this._wordCount.sumMax = Math.max(... numList);
-		this._wordCount.sumMin = Math.min(... numList);
-		this._wordCount.sumAvg = this._wordCount.sumTotal / numList.length;
+		this._wordCount.sumMax = Math.max(... numListFlattenned);
+		this._wordCount.sumMin = Math.min(... numListFlattenned);
+		this._wordCount.sumAvg = this._wordCount.sumTotal / numListFlattenned.length;
+
 	}
 
 	private updateColInfo(lines: string[]) {
@@ -81,9 +81,6 @@ export class WordCounter {
 			numberOfCol = numList.length;
 		}
 		
-
-		console.log(numberOfCol);
-
 		let colData: {[key: string]: {[key: string]: number}} = {};
 
 		for (let i = 0; i < numberOfCol; i++) {
@@ -115,7 +112,6 @@ export class WordCounter {
 	}
 
 	public getCount(type: string): number {
-		console.log(this._wordCount);
 		return this._wordCount[type];
     }
     
