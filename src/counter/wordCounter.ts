@@ -1,6 +1,4 @@
 import {StatusBarItem, StatusBarAlignment, window} from "vscode";
-import {DELIMITER} from "../util";
-
 
 
 // regex string that extracts list of all numbers present in a string
@@ -31,9 +29,6 @@ export class WordCounter {
 			this.statusBar.hide();
 			return;
 		}
-
-		const fileName_split = editor.document.fileName.split(".");
-		const delim = fileName_split[fileName_split.length - 1];
 
 		// Retrieve text
 		let selection = editor.selection;
@@ -120,6 +115,7 @@ export class WordCounter {
 	}
 
 	public getCount(type: string): number {
+		console.log(this._wordCount);
 		return this._wordCount[type];
     }
     

@@ -26,7 +26,7 @@ export function activate({subscriptions}: ExtensionContext) {
 		subscriptions.push(commands.registerCommand(command, () => {
 			let n = wordCounter.getCount(element);
 			window.showInformationMessage(`Total count: ${n}`);
-			results_viewer.openResultsFile(wordCounterController);
+			// results_viewer.openResultsFile(wordCounterController);
 		}));
 	});
 }
