@@ -14,9 +14,6 @@ export class WordCounterController {
         window.onDidChangeTextEditorSelection(this._onEvent, this, subscriptions);
         window.onDidChangeActiveTextEditor(this._onEvent, this, subscriptions);
 
-        // update the counter for the current file
-		// this._wordCounter.updateWordCount();
-
         // create a combined disposable from both event subscriptions
         this._disposable = Disposable.from(...subscriptions);
     }
