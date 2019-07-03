@@ -77,7 +77,7 @@ export class WordCounter {
 	private updateColInfo(lines: string[]) {
 		const numList = lines[0].match(NUMERIC_NUMBERS)
 		let numberOfCol = 0;
-		if (numList != null) {
+		if (numList !== null) {
 			numberOfCol = numList.length;
 		}
 		
