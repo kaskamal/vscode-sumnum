@@ -12,9 +12,9 @@
 
 
 ### NEXT
-- [ ] Add option to sum a specific column either specified or based on column number
+- [x] Add option to sum a specific column either specified or based on column number
 - [ ] Add option to sum a specific row
-- [ ] Add additional options than just calculating the sum, including max, min, & avg
+- [x] Add additional options than just calculating the sum, including max, min, & avg
 - [ ] Create hover that displays results quickly 
-- [ ] Register command to output results to json file
+- [x] Register command to output results to json file
   
