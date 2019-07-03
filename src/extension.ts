@@ -1,7 +1,8 @@
-import {window, commands, ExtensionContext} from 'vscode';
+import {window, commands, ExtensionContext, languages, Hover} from 'vscode';
 import * as results_viewer from "./resultsViewer";
 import {WordCounterController} from "./counter/wordCounterController";
 import {WordCounter} from "./counter/wordCounter";
+import { HoverDisplay } from './hover/hoverDisplay';
 
 export function activate({subscriptions}: ExtensionContext) {
 
@@ -9,15 +10,25 @@ export function activate({subscriptions}: ExtensionContext) {
 	console.log('sumnum extension has been successfully added');
 
 	const statusBarCommand = "statusBar.showSum";
+	const hoverFilterCommand = "statusBar.showHover";
 	const palatteCommands = ["sumTotal", "sumAvg", "sumMax", "sumMin", "sumCol"];
 
 	subscriptions.push(commands.registerCommand(statusBarCommand, () => {
 		let n = wordCounter.getCount("sumTotal");
 		window.showInformationMessage(`Total count: ${n}`);
-	}))
+	}));
+
+
 
 	let wordCounter = new WordCounter(statusBarCommand);
 	let wordCounterController = new WordCounterController(wordCounter);
+	let hoverDisplay = new HoverDisplay(hoverFilterCommand);
+
+	subscriptions.push(commands.registerCommand(hoverFilterCommand, () => {
+		hoverDisplay.flipHover();
+	}));
+	
+
 	subscriptions.push(wordCounter);
 	subscriptions.push(wordCounterController);
 
@@ -33,4 +44,10 @@ export function activate({subscriptions}: ExtensionContext) {
 	subscriptions.push(commands.registerCommand("extension.sumResult", () => {
 		results_viewer.openResultsFile(wordCounterController);
 	}));
+
+	languages.registerHoverProvider('*', {
+		provideHover(document, position, token) {
+			return new Hover('I am a hover!');
+		}
+	});
 }
