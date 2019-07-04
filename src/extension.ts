@@ -22,7 +22,7 @@ export function activate({subscriptions}: ExtensionContext) {
 
 	let wordCounter = new WordCounter(statusBarCommand);
 	let wordCounterController = new WordCounterController(wordCounter);
-	let hoverDisplay = new HoverDisplay(hoverFilterCommand);
+	let hoverDisplay = new HoverDisplay(hoverFilterCommand, wordCounter);
 
 	subscriptions.push(commands.registerCommand(hoverFilterCommand, () => {
 		hoverDisplay.flipHover();
@@ -45,9 +45,4 @@ export function activate({subscriptions}: ExtensionContext) {
 		results_viewer.openResultsFile(wordCounterController);
 	}));
 
-	languages.registerHoverProvider('*', {
-		provideHover(document, position, token) {
-			return new Hover('I am a hover!');
-		}
-	});
 }
