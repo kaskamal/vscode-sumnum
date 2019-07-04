@@ -17,4 +17,4 @@
 - [x] Add additional options than just calculating the sum, including max, min, & avg
 - [ ] Create hover that displays results quickly 
 - [x] Register command to output results to json file
-  
+- [ ] Add command palatte option to sum selected text, otherwise, handle the entire file
