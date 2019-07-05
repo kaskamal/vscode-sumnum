@@ -30,9 +30,8 @@ export class WordCounter {
 			return;
 		}
 
-		// Retrieve text
-		let selection = editor.selection;
-		let text = editor.document.getText(selection);
+		// Retrieve entrire text content
+		let text = editor.document.getText();
 
 		this.extractWordCount(text);
 
