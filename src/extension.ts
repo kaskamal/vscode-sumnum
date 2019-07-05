@@ -11,7 +11,7 @@ export function activate({subscriptions}: ExtensionContext) {
 
 	const statusBarCommand = "statusBar.showSum";
 	const hoverFilterCommand = "statusBar.showHover";
-	const palatteCommands = ["sumTotal", "sumAvg", "sumMax", "sumMin", "sumCol"];
+	const palatteCommands = ["sumTotal", "sumAvg", "sumMax", "sumMin", "sumCol", "sumSelection"];
 
 	subscriptions.push(commands.registerCommand(statusBarCommand, () => {
 		let n = wordCounter.getCount("sumTotal");
