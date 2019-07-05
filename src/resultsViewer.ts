@@ -27,6 +27,16 @@ function editWorkspace(wordCounterController: WordCounterController, file: Uri):
     // the file
     const endFile   = new Position(100, 100);
 
-    edit.replace(file, new Range(startFile, endFile), JSON.stringify(wordCounter.wordCount, null, "\t"));
+    // Extract data to view from word counter
+    const result_data = {
+        "Sum Total": wordCounter.getCount("sumTotal"),
+        "Sum Max": wordCounter.getCount("sumMax"),
+        "Sum Min": wordCounter.getCount("sumMin"),
+        "Sum Avg": wordCounter.getCount("sumAvg"),
+        "Sum Columns": wordCounter.getCount("sumCol")
+    }
+
+
+    edit.replace(file, new Range(startFile, endFile), JSON.stringify(result_data, null, "\t"));
     return edit;
 } 
