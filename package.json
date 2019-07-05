@@ -46,6 +46,11 @@
                 "command": "extension.sumResult",
                 "title": "Result",
                 "category": "SUM"
+            },
+            {
+                "command": "extension.sumSelection",
+                "title": "Selection",
+                "category": "SUM"
             }
         ]
     },
