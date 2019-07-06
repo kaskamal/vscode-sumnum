@@ -11,7 +11,7 @@ export class HoverDisplay {
     constructor(buttonId: string, wordCounter: WordCounter) {
         this._buttonId = buttonId;
         this._wordCounter = wordCounter;
-        this.createStatusBar(buttonId);
+        // this.createStatusBar(buttonId);
         this._hoverDisposible = undefined;
         this._statusBar = window.createStatusBarItem(StatusBarAlignment.Left);
         this._statusBar.command = buttonId;
