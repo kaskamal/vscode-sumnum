@@ -47,12 +47,42 @@ export class WordCounter {
 
 
 	private updateSelInfo(text: string) {
+		if (text == "") {
+			this._wordCount.sumSelection = 0;
+		}
 		const lines = text.trim().split("\n");
 
-		const numList = lines[0].match(NUMERIC_NUMBERS)
+		const numList: number[][] = lines.map((line) => {
+			const allNumsS = line.match(NUMERIC_NUMBERS);
+			if (allNumsS && allNumsS.length > 0) {	
+				// Parse all numbers to float
+				return allNumsS.map((numS) => {
+					return +(numS);
+				});
+			} else {
+				return [];
+			}
+		});
+
+		// flatten multidimensional array into 1d array 
+		// consisting of all the numbers highlighted 
+		let numListFlattenned: number[] = [];
+		numListFlattenned = numListFlattenned.concat(... numList);
+
+
+		this._wordCount.sumSelection["sumTotal"] =  numListFlattenned.reduce((prev, curr) => {
+			return prev + curr;
+		});
+		this._wordCount.sumSelection["sumMax"] = Math.max(... numListFlattenned);
+		this._wordCount.sumSelection["sumMin"] = Math.min(... numListFlattenned);
+		this._wordCount.sumSelection["sumAvg"] = this._wordCount.sumTotal / numListFlattenned.length;
+
+
+
+		const numListCol = lines[0].match(NUMERIC_NUMBERS)
 		let numberOfCol = 0;
-		if (numList !== null) {
-			numberOfCol = numList.length;
+		if (numListCol !== null) {
+			numberOfCol = numListCol.length;
 		}
 		
 		let colData: {[key: string]: {[key: string]: number}} = {};
@@ -81,8 +111,7 @@ export class WordCounter {
 			}
 		})
 
-
-		this._wordCount.sumSelection = colData;
+		this._wordCount.sumSelection["sumCol"] = colData;
 	}
 
 	public extractWordCount(text: string) {
@@ -155,7 +184,7 @@ export class WordCounter {
 	}
 
 	public getCount(type: string): number {
-		console.log(this._wordCount[type])
+		console.log(this._wordCount.sumSelection)
 		if (type === "sumSelection") {
 			return this._wordCount[type]["sumTotal"]
 		} else {
