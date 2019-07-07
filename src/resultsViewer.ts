@@ -28,12 +28,14 @@ function editWorkspace(wordCounterController: WordCounterController, file: Uri):
     const endFile   = new Position(100, 100);
 
     // Extract data to view from word counter
+    const wordCount = wordCounter.wordCount;
     const result_data = {
-        "Sum Total": wordCounter.getCount("sumTotal"),
-        "Sum Max": wordCounter.getCount("sumMax"),
-        "Sum Min": wordCounter.getCount("sumMin"),
-        "Sum Avg": wordCounter.getCount("sumAvg"),
-        "Sum Columns": wordCounter.getCount("sumCol")
+        "Sum Total": wordCount["sumTotal"],
+        "Sum Max": wordCount["sumMax"],
+        "Sum Min": wordCount["sumMin"],
+        "Sum Avg": wordCount["sumAvg"],
+        "Sum Columns": wordCount["sumCol"],
+        "Sum Selection": wordCount["sumSelection"]
     }
 
 
