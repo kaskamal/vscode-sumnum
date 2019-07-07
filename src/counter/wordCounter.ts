@@ -194,7 +194,9 @@ export class WordCounter {
 
 	public getCount(type: string): number {
 		if (type === "sumSelection") {
-			return this._wordCount[type]["sumTotal"];
+			return typeof this._wordCount[type] === "number"
+					? this._wordCount[type]
+					: this._wordCount[type]["sumTotal"];
 		} else {
 			return this._wordCount[type];
 		}
