@@ -80,7 +80,7 @@ export class WordCounter {
 
 		temp_selection["sumMax"] = Math.max(... numListFlattenned);
 		temp_selection["sumMin"] = Math.min(... numListFlattenned);
-		temp_selection["sumAvg"] = this._wordCount.sumTotal / numListFlattenned.length;
+		temp_selection["sumAvg"] = temp_selection["sumTotal"] / numListFlattenned.length;
 
 
 
