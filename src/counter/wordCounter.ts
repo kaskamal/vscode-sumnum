@@ -1,4 +1,4 @@
-import {StatusBarItem, StatusBarAlignment, window} from "vscode";
+import {StatusBarItem, StatusBarAlignment, window, Position, Range, TextDocument} from "vscode";
 
 
 // regex string that extracts list of all numbers present in a string
@@ -6,6 +6,7 @@ const NUMERIC_NUMBERS = /[+-]?\d+(?:\.\d+)?/g;
 
 export class WordCounter {
 	private statusBar: StatusBarItem;
+	private _fullRange: Range;
 	private _wordCount: {[key: string]: any} = {
 		sumTotal: 0,
 		sumAvg:   0,
@@ -18,6 +19,7 @@ export class WordCounter {
 	constructor(commandId: string) {
 		this.statusBar = window.createStatusBarItem(StatusBarAlignment.Left);
 		this.statusBar.command = commandId;
+		this._fullRange = new Range(new Position(0,0), new Position(0,0));
 	}
 
 	public updateWordCount() {
@@ -35,6 +37,8 @@ export class WordCounter {
 		let text = editor.document.getText();
 		let highlightedText = editor.document.getText(selection);
 
+		this.updateRange(editor.document);
+
 		// Update word counts for all queries
 		this.extractWordCount(text);
 		this.updateColInfo(text);
@@ -45,6 +49,21 @@ export class WordCounter {
 		this.statusBar.show();
 	}
 
+
+	private updateRange(document: TextDocument) {
+		// Create range that is intentially one line past the text and 
+		// trim the range to produce the range containing the full contents 
+		// of the file
+		const invalidRange = new Range(0, 0, document.lineCount, 0);
+		this._fullRange = document.validateRange(invalidRange);	
+
+		// this._fullRange = new Range(validatedRange.start,
+		// 							new Position(validatedRange.end.line + 1, validatedRange.end.character));
+	}
+
+	get fullRange() {
+		return this._fullRange;
+	}
 
 	private updateSelInfo(text: string) {
 		let temp_selection: {[key: string]: any} = {};

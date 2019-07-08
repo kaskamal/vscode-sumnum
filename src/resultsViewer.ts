@@ -21,11 +21,9 @@ function editWorkspace(wordCounterController: WordCounterController, file: Uri):
 
     const edit = new WorkspaceEdit();
 
-    // Start and end position of file to replace
-    const startFile = new Position(0, 0);
-    // Temp solution, need to determine the end line and character of 
-    // the file
-    const endFile   = new Position(100, 100);
+    // Full range of file
+    const fullRange = wordCounter.fullRange;
+    console.log(fullRange);
 
     // Extract data to view from word counter
     const wordCount = wordCounter.wordCount;
@@ -39,6 +37,6 @@ function editWorkspace(wordCounterController: WordCounterController, file: Uri):
     }
 
 
-    edit.replace(file, new Range(startFile, endFile), JSON.stringify(result_data, null, "\t"));
+    edit.replace(file, fullRange, JSON.stringify(result_data, null, "\t"));
     return edit;
 } 
