@@ -36,7 +36,9 @@ function editWorkspace(wordCounterController: WordCounterController, file: Uri):
         "Sum Selection": wordCount["sumSelection"]
     }
 
-
-    edit.replace(file, fullRange, JSON.stringify(result_data, null, "\t"));
+    if (edit.has(file)) {
+        edit.deleteFile(file);
+    }
+    edit.insert(file, new Position(0, 0), JSON.stringify(result_data, null, "\t"));
     return edit;
 } 
