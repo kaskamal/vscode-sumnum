@@ -13,6 +13,7 @@ export class WordCounterController {
         let subscriptions: Disposable[] = [];
         window.onDidChangeTextEditorSelection(this._onEvent, this, subscriptions);
         window.onDidChangeActiveTextEditor(this._onEvent, this, subscriptions);
+        window.onDidChangeTextEditorVisibleRanges(this._onEvent, this, subscriptions);
 
         // create a combined disposable from both event subscriptions
         this._disposable = Disposable.from(...subscriptions);
