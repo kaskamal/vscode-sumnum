@@ -23,7 +23,6 @@ export class WordCounter {
 	}
 
 	public updateWordCount() {
-
 		// Get the current text editor
 		let editor = window.activeTextEditor;
 
@@ -32,6 +31,7 @@ export class WordCounter {
 			this.statusBar.hide();
 			return;
 		}
+
 
 		let selection = editor.selection;
 		let text = editor.document.getText();
@@ -42,7 +42,10 @@ export class WordCounter {
 		// Update word counts for all queries
 		this.extractWordCount(text);
 		this.updateColInfo(text);
+
 		this.updateSelInfo(highlightedText);
+
+
 
 
 		this.statusBar.text = `Sum: ${this._wordCount.sumTotal}`;
@@ -50,7 +53,7 @@ export class WordCounter {
 	}
 
 
-	private updateRange(document: TextDocument) {
+	private updateRange(document: TextDocument): void {
 		// Create range that is intentially one line past the text and 
 		// trim the range to produce the range containing the full contents 
 		// of the file
@@ -86,6 +89,7 @@ export class WordCounter {
 			}
 		});
 
+
 		// flatten multidimensional array into 1d array 
 		// consisting of all the numbers highlighted 
 		let numListFlattenned: number[] = [];
@@ -94,7 +98,7 @@ export class WordCounter {
 
 		temp_selection["sumTotal"] =  numListFlattenned.reduce((prev, curr) => {
 			return prev + curr;
-		});
+		}, 0);
 
 
 		temp_selection["sumMax"] = Math.max(... numListFlattenned);
