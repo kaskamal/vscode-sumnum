@@ -1,4 +1,4 @@
-import {Uri, workspace, window, WorkspaceEdit, Position, Range} from 'vscode';
+import {Uri, workspace, window, WorkspaceEdit, Position, Range, TextEditor, commands} from 'vscode';
 import { WordCounterController } from './counter/wordCounterController';
 import { WordCounter } from './counter/wordCounter';
 
@@ -22,8 +22,26 @@ function editWorkspace(wordCounterController: WordCounterController, file: Uri):
     const edit = new WorkspaceEdit();
 
     // Full range of file
-    const fullRange = wordCounter.fullRange;
-    console.log(fullRange);
+    const fullRange = new Range(new Position(0, 0),
+                                new Position(1000, 1000));
+    
+    // console.log(window.visibleTextEditors.)
+
+    // const visibleTextEditors: TextEditor[] = window.visibleTextEditors;
+    
+    // const fileNameList: string[] = visibleTextEditors.map((textEditor) => {
+    //     return textEditor.document.fileName
+    // })
+
+    // if (fileNameList.includes(file.fsPath)) {
+    //     window.showTextDocument(file, {preview: true, preserveFocus: false})
+    //     .then(() => {
+    //         commands.executeCommand('workbench.action.closeActiveEditor');
+    //     });
+    // }
+
+    
+
 
     // Extract data to view from word counter
     const wordCount = wordCounter.wordCount;
@@ -36,9 +54,8 @@ function editWorkspace(wordCounterController: WordCounterController, file: Uri):
         "Sum Selection": wordCount["sumSelection"]
     }
 
-    if (edit.has(file)) {
-        edit.deleteFile(file);
-    }
-    edit.insert(file, new Position(0, 0), JSON.stringify(result_data, null, "\t"));
+
+    // console.log(edit.entries())
+    edit.replace(file, fullRange, JSON.stringify(result_data, null, "\t"));
     return edit;
 } 
