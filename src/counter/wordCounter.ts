@@ -2,7 +2,20 @@ import {StatusBarItem, StatusBarAlignment, window, Position, Range, TextDocument
 
 
 // regex string that extracts list of all numbers present in a string
-const NUMERIC_NUMBERS = /[+-]?\d+(?:\.\d+)?/g;
+export const NUMERIC_NUMBERS = /[+-]?\d+(?:\.\d+)?/g;
+
+interface colData {
+	[key: string]: number,
+	sumTotal: number,
+	sumMax: number,
+	sumMin: number,
+	sumAvg: number,
+	startLoc: number
+}
+
+export interface colType {
+	[key: string]: colData
+}
 
 export class WordCounter {
 	private statusBar: StatusBarItem;
@@ -192,7 +205,8 @@ export class WordCounter {
 				sumTotal: 0,
 				sumAvg: 0,
 				sumMax: 0,
-				sumMin: Infinity
+				sumMin: Infinity,
+				startLoc: numList ? lines[0].indexOf(numList[i]) : 0
 			};
 		}
 
@@ -215,7 +229,7 @@ export class WordCounter {
 		this._wordCount.sumCol = colData;
 	}
 
-	public getCount(type: string): number {
+	public getCount(type: string): number | colType {
 		if (type === "sumSelection") {
 			return typeof this._wordCount[type] === "number"
 					? this._wordCount[type]
