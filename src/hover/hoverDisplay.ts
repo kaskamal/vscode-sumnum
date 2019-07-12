@@ -1,18 +1,18 @@
-import {StatusBarItem, StatusBarAlignment, window, languages, Hover, Position, Disposable} from "vscode";
-import { WordCounter } from "../counter/wordCounter";
+import {StatusBarItem, StatusBarAlignment, window, languages, Hover, Position, Disposable, MarkdownString} from "vscode";
+import { WordCounter, NUMERIC_NUMBERS, colType } from "../counter/wordCounter";
+
 
 
 export class HoverDisplay {
     private _buttonId: string;
     private _wordCounter: WordCounter;
     private _statusBar: StatusBarItem;
-    private _hoverDisposible: Disposable | undefined;
+    private _hoverDisposible: Disposable[];
 
     constructor(buttonId: string, wordCounter: WordCounter) {
         this._buttonId = buttonId;
         this._wordCounter = wordCounter;
-        // this.createStatusBar(buttonId);
-        this._hoverDisposible = undefined;
+        this._hoverDisposible = [];
         this._statusBar = window.createStatusBarItem(StatusBarAlignment.Left);
         this._statusBar.command = buttonId;
         this._statusBar.text = `ENABLE HOVER`;
@@ -26,32 +26,38 @@ export class HoverDisplay {
     }
 
     private updateHover() {
-        // Remove previous hover to prevent merging with new hover
-        if (this._hoverDisposible) {
-            this._hoverDisposible.dispose();
-        }
+        // Remove previous hovers to prevent merging with new hover
+        this._hoverDisposible.forEach((elm) => {
+            elm.dispose();
+        })
 
+        // Check whether hover display is enabled
         if (this._statusBar.text === `ENABLE HOVER`) {
             return;
         } else {
             this._wordCounter.updateWordCount();
-            const number = this._wordCounter.getCount("sumTotal")
-            this._hoverDisposible = languages.registerHoverProvider('*', {
-                provideHover(document, position, token) {
-                    if (position.isEqual(new Position(0,0))) {
-                        return new Hover(`${number}`);
-                    }
-                }
-            });
+            const colData: number | colType = this._wordCounter.getCount("sumCol");
+
+            if (typeof colData === "object") {
+                Object.keys(colData).forEach((col) => {
+                    const colInformation = colData[col];
+                    this._hoverDisposible.push(languages.registerHoverProvider('*', {
+                        provideHover(document, position, token) {
+                            if (position.isEqual(new Position(0,colInformation["startLoc"]))) {
+                                let markdownString: MarkdownString = new MarkdownString();
+                                markdownString.appendMarkdown(`### ${col} Summary`);
+                                return new Hover(markdownString);
+                            }
+                        }
+                    }));
+                })
+            }
+            
+
+
+            
         }
     }
-
-    // private createStatusBar(buttonId: string): void {
-    //     this._statusBar = window.createStatusBarItem(StatusBarAlignment.Left);
-    //     this._statusBar.command = buttonId;
-    //     this._statusBar.text = `ENABLE HOVER`;
-    //     this._statusBar.show();
-    // }
 
     public flipHover(): void {
         if (this._statusBar.text === `ENABLE HOVER`) {
