@@ -45,14 +45,15 @@ export class HoverDisplay {
                         provideHover(document, position, token) {
                             if (position.isEqual(new Position(0,colInformation["startLoc"]))) {
                                 let markdownString: MarkdownString = new MarkdownString();
-                                markdownString.appendMarkdown(`### ${col} Summary \n`);
+                                // markdownString.appendMarkdown(`${col} Summary \n`);
+                                // markdownString.appendMarkdown(`--- \n`)
                                 markdownString.appendMarkdown(
-                                    `|                |                               |      
-                                     | :------------- | :---------------------------- |
-                                     | Sum Numbers    | ${colInformation["sumTotal"]}
-                                     | Maximum Number | ${colInformation["sumMax"]}      
-                                     | Minimum Number | ${colInformation["sumMin"]} 
-                                     | Average Number | ${colInformation["sumAvg"]}`
+                                    `| ${col} Summary  |                               |      
+                                     | :-------------  | :---------------------------- |
+                                     | Sum Numbers:    | ${colInformation["sumTotal"]}
+                                     | Maximum Number: | ${colInformation["sumMax"]}      
+                                     | Minimum Number: | ${colInformation["sumMin"]} 
+                                     | Average Number: | ${colInformation["sumAvg"]}`
                                 )
                                 return new Hover(markdownString);
                             }
