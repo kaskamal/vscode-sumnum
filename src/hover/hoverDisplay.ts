@@ -1,5 +1,5 @@
 import {StatusBarItem, StatusBarAlignment, window, languages, Hover, Position, Disposable, MarkdownString} from "vscode";
-import { WordCounter, NUMERIC_NUMBERS, colType } from "../counter/wordCounter";
+import { WordCounter, colType } from "../counter/wordCounter";
 
 
 
@@ -48,7 +48,7 @@ export class HoverDisplay {
                                 // markdownString.appendMarkdown(`${col} Summary \n`);
                                 // markdownString.appendMarkdown(`--- \n`)
                                 markdownString.appendMarkdown(
-                                    `| ${col} Summary  |                               |      
+                                    `| Column ${+(col.substr(3)) + 1} Summary  |       |      
                                      | :-------------  | :---------------------------- |
                                      | Sum Numbers:    | ${colInformation["sumTotal"]}
                                      | Maximum Number: | ${colInformation["sumMax"]}      
@@ -71,6 +71,7 @@ export class HoverDisplay {
             this.updateHover();
         } else {
             this._statusBar.text = `ENABLE HOVER`;
+            this.updateHover();
         }
     }
 }
