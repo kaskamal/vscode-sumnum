@@ -3,9 +3,7 @@
 ### MVP
 - [x] Add sum as status bar item
 - [x] Implement logic to sum all the numbers present in file
-- [ ] Add options to sum horizontally vs vertically
 - [x] create easy to use commands in command palate to execute the functionallity 
-- [ ] Add the sum to clipboard for easy use afterwards
 
 
 
@@ -13,8 +11,8 @@
 
 ### NEXT
 - [x] Add option to sum a specific column either specified or based on column number
-- [ ] Add option to sum a specific row
+- [x] Add option to sum a specific row
 - [x] Add additional options than just calculating the sum, including max, min, & avg
-- [ ] Create hover that displays results quickly 
+- [x] Create hover that displays results quickly 
 - [x] Register command to output results to json file
-- [ ] Add command palatte option to sum selected text, otherwise, handle the entire file
+- [x] Add command palatte option to sum selected text, otherwise, handle the entire file
