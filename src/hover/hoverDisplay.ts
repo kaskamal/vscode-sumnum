@@ -4,13 +4,11 @@ import { WordCounter, colType } from "../counter/wordCounter";
 
 
 export class HoverDisplay {
-    private _buttonId: string;
     private _wordCounter: WordCounter;
     private _statusBar: StatusBarItem;
     private _hoverDisposible: Disposable[];
 
     constructor(buttonId: string, wordCounter: WordCounter) {
-        this._buttonId = buttonId;
         this._wordCounter = wordCounter;
         this._hoverDisposible = [];
         this._statusBar = window.createStatusBarItem(StatusBarAlignment.Left);
