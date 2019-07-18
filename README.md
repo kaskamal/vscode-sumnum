@@ -1,7 +1,5 @@
 # SumNum for Visual Studio Code
 
-[![The MIT License](https://flat.badgen.net/badge/license/MIT/orange)](http://opensource.org/licenses/MIT)
-
 Rapid numerical analysis of data files, highlighted texts, and more!
 
 ![Example](https://raw.githubusercontent.com/kaskamal/vscode-sumnum/master/images/example_sumnum_usage.gif)
@@ -18,7 +16,19 @@ Click the extensions icon in the activity bar and search for *kaskamal.sumnum*. 
 $ code --install-extension kaskamal.sumnum
 ```
 
+# Usage 
 
-## License
+## Command Palatte Commands
 
-This work is licensed under [The MIT License](https://opensource.org/licenses/MIT)
+enter `Ctrl-Shift-P` and enter one of the following commands:
+
+| Command       |             |
+| :----------  | :--------- |
+| `SUM: Total`  | Total sum of numbers  
+| `SUM: Max`    | Maximum number  
+| `SUM: Min`    | Minimum number  
+| `SUM: Avg`    | Average number 
+| `SUM: Result` | Results JSON file 
+| `SUM: Col`    | Column information
+
+*Data extracted from currently selected file*
