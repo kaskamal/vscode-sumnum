@@ -22,13 +22,22 @@ $ code --install-extension kaskamal.sumnum
 
 enter `Ctrl-Shift-P` and enter one of the following commands:
 
-| Command       |             |
-| :----------  | :--------- |
-| `SUM: Total`  | Total sum of numbers  
-| `SUM: Max`    | Maximum number  
-| `SUM: Min`    | Minimum number  
-| `SUM: Avg`    | Average number 
-| `SUM: Result` | Results JSON file 
-| `SUM: Col`    | Column information
+| Command          |                                               |
+| :--------------- | :-------------------------------------------- | 
+| `SUM: Total`     | Total sum of numbers  
+| `SUM: Max`       | Maximum number  
+| `SUM: Min`       | Minimum number  
+| `SUM: Avg`       | Average number 
+| `SUM: Result`    | Results JSON file 
+| `SUM: Col`       | Column information
+| `SUM: Selection` | Results JSON file for currently selected text 
 
 *Data extracted from currently selected file*
+
+## Status Bar Sum 
+
+Status bar item of format `Sum: NUMBER`. Represents a continuously updated total sum of the currently selected file 
+
+## Hover Display
+
+Enable/Disable hover display using status bar item - `ENABLE HOVER | DISABLE HOVER`
